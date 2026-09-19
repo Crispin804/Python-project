@@ -5,7 +5,6 @@ from tkinter import messagebox, ttk
 
 class Database:
 
-    """Handles all database connections and SQL operations."""
 
     def __init__(self, db_name="shop_inventory.db"):
         self.conn = sqlite3.connect(db_name)
@@ -60,24 +59,19 @@ class ShopApp:
         self.root.title("Shop Inventory Management")
         self.root.geometry("750x500")
 
-        # Database Manager Instance
         self.db = Database()
 
-        # Track selected item ID
         self.selected_item_id = None
 
-        # Build Interface
         self.create_widgets()
         self.load_data()
 
     def create_widgets(self):
-        # --- Form Frame (Top) ---
         form_frame = tk.LabelFrame(
             self.root, text="Item Entry Form", font=("Arial", 11, "bold")
         )
         form_frame.pack(fill="x", padx=15, pady=10)
 
-        # Form Inputs
         tk.Label(form_frame, text="Item Name:").grid(
             row=0, column=0, padx=5, pady=5, sticky="e"
         )
@@ -96,7 +90,6 @@ class ShopApp:
         self.entry_price = tk.Entry(form_frame)
         self.entry_price.grid(row=0, column=5, padx=5, pady=5)
 
-        # --- Button Frame ---
         btn_frame = tk.Frame(self.root)
         btn_frame.pack(fill="x", padx=15, pady=5)
 
@@ -141,7 +134,6 @@ class ShopApp:
             command=self.show_names,
         ).pack(side="right", padx=5)
 
-        # --- Data Table (Bottom) ---
         table_frame = tk.Frame(self.root)
         table_frame.pack(fill="both", expand=True, padx=15, pady=10)
 
@@ -160,7 +152,6 @@ class ShopApp:
         self.tree.column("quantity", width=100, anchor="center")
         self.tree.column("price", width=100, anchor="center")
 
-        # Scrollbar for table
         scrollbar = ttk.Scrollbar(
             table_frame, orient="vertical", command=self.tree.yview
         )
@@ -169,10 +160,8 @@ class ShopApp:
         self.tree.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
 
-        # Bind row selection event
         self.tree.bind("<<TreeviewSelect>>", self.on_row_select)
 
-    # --- Controller Methods ---
 
     def load_data(self):
         """Fetch all records from SQLite and populate the treeview."""
